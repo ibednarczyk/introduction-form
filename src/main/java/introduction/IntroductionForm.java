@@ -49,7 +49,10 @@ public class IntroductionForm implements ActionListener {
     }
 
     private void setSize(){
-
+        firstNameLabel.setBounds(20,20, 200, 40);
+        lastNameLabel.setBounds(20, 70, 200, 40);
+        firstNameField.setBounds(220, 20, 240, 40);
+        lastNameField.setBounds(220, 70, 240, 40);
     }
 
     private void add(){
