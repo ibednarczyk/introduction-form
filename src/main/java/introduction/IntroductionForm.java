@@ -33,6 +33,7 @@ public class IntroductionForm implements ActionListener {
         setSize();
         setFont();
         add();
+        actionEvent();
 
     }
 
@@ -93,6 +94,10 @@ public class IntroductionForm implements ActionListener {
         jFrame.add(skillsLabel);
         jFrame.add(helloButton);
 
+    }
+
+    public void actionEvent(){
+        helloButton.addActionListener(this);
     }
 
 
