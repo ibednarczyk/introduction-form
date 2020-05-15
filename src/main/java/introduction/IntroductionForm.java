@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class IntroductionForm implements ActionListener {
 
@@ -77,7 +79,7 @@ public class IntroductionForm implements ActionListener {
 
     }
 
-    private void add(){
+    private void add() {
         jFrame.add(firstNameField);
         jFrame.add(lastNameField);
         jFrame.add(professionField);
@@ -96,7 +98,7 @@ public class IntroductionForm implements ActionListener {
 
     }
 
-    public void actionEvent(){
+    private void actionEvent(){
         helloButton.addActionListener(this);
     }
 
@@ -104,5 +106,37 @@ public class IntroductionForm implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if (e.getSource().equals(helloButton)) {
+
+            try {
+                DBManager dbManager = DBManager.getInstance();
+
+                String query = "INSERT INTO FORM (FIRSTNAME, LASTNAME, PROFESSION, LOVETO, WANTTO, TECH, SKILLS) VALUES(?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(query);
+                    preparedStatement.setString(1, firstNameField.getText());
+                    preparedStatement.setString(2, lastNameField.getText());
+                    preparedStatement.setString(3, professionField.getText());
+                    preparedStatement.setString(4, wantToField.getText());
+                    preparedStatement.setString(5, loveToField.getText());
+                    preparedStatement.setString(6, techField.getText());
+                    preparedStatement.setString(7, skillField.getText());
+
+                preparedStatement.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "All saved!");
+
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } finally {
+                firstNameField.setText("");
+                lastNameField.setText("");
+                professionField.setText("");
+                wantToField.setText("");
+                loveToField.setText("");
+                techField.setText("");
+                skillField.setText("");
+            }
+
+        }
     }
 }
